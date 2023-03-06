@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="NameTextView">
+        <item name="android:background">@drawable/bg_edittext</item>
+        <item name="android:inputType">textCapSentences</item>
+        <item name="android:lines">1</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:maxLength">50</item>
+        <item name="android:imeOptions">actionDone</item>
+    </style>
+</resources>

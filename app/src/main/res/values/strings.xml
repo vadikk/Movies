@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Movies</string>
+    <string name="popular">Popular</string>
+    <string name="favorites">Favorites</string>
+    <string name="profile">Profile</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="settingCardDash">#EBEBF0</color>
+    <color name="grayColor">#88868D</color>
+    <color name="textColor">#303033</color>
+    <color name="dividerColor">#33161B26</color>
+    <color name="white">#FFFFFF</color>
+</resources>
