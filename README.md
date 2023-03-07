@@ -48,7 +48,7 @@ the libraries are in the stable version unless there is a good reason to use non
   * [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
   * Single activity architecture
     using [Navigation component](https://developer.android.com/guide/navigation/navigation-getting-started)
-  * MVVM + MVI (presentation layer)
+  * MVVM
   * [Android Architecture components](https://developer.android.com/topic/libraries/architecture)
     ([ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
     , [Kotlin Flow](https://kotlinlang.org/docs/flow.html)
