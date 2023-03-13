@@ -7,8 +7,9 @@ import com.example.profile.domain.model.Profile
 import com.example.profile.domain.repository.ProfileRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-internal class ProfileRepositoryImpl(
+internal class ProfileRepositoryImpl @Inject constructor(
     private val profileDao: ProfileDao
 ): ProfileRepository {
 

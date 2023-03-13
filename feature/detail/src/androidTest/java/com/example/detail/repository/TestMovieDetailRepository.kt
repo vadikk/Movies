@@ -3,8 +3,9 @@ package com.example.detail.repository
 import com.example.movie.model.Movie
 import com.example.movie.model.MovieDetail
 import com.example.movie.repository.movieDetail.MovieDetailRepository
+import javax.inject.Inject
 
-class TestMovieDetailRepository: MovieDetailRepository {
+class TestMovieDetailRepository @Inject constructor(): MovieDetailRepository {
 
     override suspend fun getFavoriteMovie(id: Int): Movie? = null
 

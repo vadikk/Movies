@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -14,14 +15,16 @@ import com.example.common.nav.NavManager
 import com.example.common.nav.NavScreen
 import com.example.favorite.adapter.FavoriteMoviesAdapter
 import com.example.favorite.databinding.FragmentFavoriteListBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
+@AndroidEntryPoint
 internal class FavoriteListFragment : Fragment() {
 
-    private val favoriteListVM: FavoriteListVM by viewModel()
-    private val navManager by inject<NavManager>()
+    @Inject
+    lateinit var navManager:NavManager
+    private val favoriteListVM: FavoriteListVM by viewModels()
     private var adapter: FavoriteMoviesAdapter? = null
     private var binding: FragmentFavoriteListBinding? = null
 

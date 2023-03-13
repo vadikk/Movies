@@ -1,6 +1,8 @@
 plugins {
     id ("com.android.library")
     kotlin ("android")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -25,6 +27,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 dependencies {
@@ -41,7 +46,8 @@ dependencies {
 
     implementation(Dependencies.coil)
 
-    implementation (Dependencies.koin_android)
+    implementation (Dependencies.hilt_android)
+    kapt (Dependencies.hilt_kapt)
 
     implementation(project(":data:movie"))
     implementation(project(":core:common"))

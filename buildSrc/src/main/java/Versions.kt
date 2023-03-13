@@ -7,7 +7,6 @@ object Versions {
     const val appcompat = "1.6.0"
     const val material = "1.8.0"
     const val constraintlayout = "2.1.4"
-    const val koin_android = "3.3.2"
     const val nav_version = "2.5.3"
     const val room_version = "2.5.0"
     const val retrofit = "2.9.0"
@@ -15,6 +14,7 @@ object Versions {
     const val paging_version = "3.1.1"
     const val coil = "2.2.2"
     const val shimmer_koleton = "1.0.0-beta01"
+    const val hilt_android = "2.44"
 
     const val junit = "4.13.2"
     const val androidx_junit = "1.1.5"

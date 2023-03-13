@@ -5,17 +5,21 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
+import com.example.common.di.IoDispatcher
 import com.example.movie.model.Movie
 import com.example.movie.repository.movie.MovieRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-internal class PopularListVM(
+@HiltViewModel
+internal class PopularListVM @Inject constructor(
     private val movieRepository: MovieRepository,
-    private val dispatcherIO: CoroutineDispatcher
+    @IoDispatcher private val dispatcherIO: CoroutineDispatcher
 ) : ViewModel() {
 
     private val _favoriteMovies = MutableStateFlow<List<Movie>>(emptyList())

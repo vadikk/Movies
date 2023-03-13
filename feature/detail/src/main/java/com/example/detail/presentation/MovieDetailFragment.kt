@@ -2,14 +2,13 @@ package com.example.detail.presentation
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -22,15 +21,13 @@ import com.example.detail.domain.showSkeletonAnimation
 import com.example.movie.TMDB_IMAGE
 import com.example.movie.model.MovieDetail
 import com.google.android.material.chip.Chip
-import koleton.api.hideSkeleton
-import koleton.api.loadSkeleton
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
+@AndroidEntryPoint
 internal class MovieDetailFragment : Fragment() {
 
-    private val movieDetailVM: MovieDetailVM by viewModel()
+    private val movieDetailVM: MovieDetailVM by viewModels()
     private var binding: FragmentMovieDetailBinding? = null
 
     override fun onCreateView(
@@ -48,8 +45,8 @@ internal class MovieDetailFragment : Fragment() {
         binding?.back?.setOnClickListener { findNavController().popBackStack() }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
-                movieDetailVM.uiState.collect{
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                movieDetailVM.uiState.collect {
                     showUI(it)
                 }
             }
@@ -63,8 +60,8 @@ internal class MovieDetailFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
 
-    private fun showUI(state: MovieDetailState){
-        when(state){
+    private fun showUI(state: MovieDetailState) {
+        when (state) {
             is MovieDetailState.Loading -> showSkeleton(true)
             is MovieDetailState.MovieDetailData -> {
                 showSkeleton(false)
@@ -73,7 +70,7 @@ internal class MovieDetailFragment : Fragment() {
         }
     }
 
-    private fun fillUpData(movieDetail: MovieDetail?){
+    private fun fillUpData(movieDetail: MovieDetail?) {
         if (movieDetail == null) return
 
         binding?.movieImageDetail?.load(TMDB_IMAGE + movieDetail.posterPath)
@@ -126,11 +123,5 @@ internal class MovieDetailFragment : Fragment() {
             binding?.movieRuntimeDetail,
             binding?.movieStatusDetail
         ).map { it.showSkeletonAnimation(R.color.skeleton_card_bg_color, isShow) }
-    }
-
-    companion object {
-
-        fun newInstance(param1: String, param2: String) =
-            MovieDetailFragment()
     }
 }

@@ -1,6 +1,8 @@
 plugins {
     id ("com.android.application")
     kotlin ("android")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -35,6 +37,11 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    // Allow references to generated code
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 dependencies {
@@ -43,11 +50,13 @@ dependencies {
     implementation (Dependencies.appcompat)
     implementation (Dependencies.material)
     implementation (Dependencies.constraintlayout)
+
     testImplementation (Dependencies.junit)
     androidTestImplementation (Dependencies.android_junit)
     androidTestImplementation (Dependencies.espresso)
 
-    implementation (Dependencies.koin_android)
+    implementation (Dependencies.hilt_android)
+    kapt (Dependencies.hilt_kapt)
 
     implementation (Dependencies.navigation_fragment_ktx)
     implementation (Dependencies.navigation_ui_ktx)

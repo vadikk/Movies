@@ -1,6 +1,7 @@
 package com.example.movie.repository.movie
 
 import androidx.paging.*
+import com.example.common.di.IoDispatcher
 import com.example.database.dao.MovieFavoriteDao
 import com.example.database.dao.MovieRemoteKeysDao
 import com.example.database.dao.MoviesDao
@@ -11,17 +12,18 @@ import com.example.network.NetworkDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.asExecutor
 import kotlinx.coroutines.flow.*
-import org.koin.java.KoinJavaComponent.inject
+import javax.inject.Inject
 
-class MovieRepositoryImpl(
+class MovieRepositoryImpl @Inject constructor(
     private val networkDataSource: NetworkDataSource,
     private val moviesDao: MoviesDao,
     private val movieRemoteKeysDao: MovieRemoteKeysDao,
     private val movieFavoriteDao: MovieFavoriteDao,
-    private val dispatcherIO: CoroutineDispatcher
+    @IoDispatcher private val dispatcherIO: CoroutineDispatcher
 ) : MovieRepository {
 
-    private val transactionProvider by inject<TransactionProvider>(TransactionProvider::class.java)
+    @Inject
+    lateinit var transactionProvider: TransactionProvider
 
     override suspend fun getPopulars(page: Int): Result<PopularMovies> =
         networkDataSource.getPopularMovies(page).map { it.mapToPopularMovies() }

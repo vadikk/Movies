@@ -1,6 +1,8 @@
 plugins {
     id ("com.android.library")
     kotlin ("android")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -25,6 +27,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 dependencies {
@@ -38,7 +43,8 @@ dependencies {
 
     implementation(Dependencies.coil)
 
-    implementation (Dependencies.koin_android)
+    implementation (Dependencies.hilt_android)
+    kapt (Dependencies.hilt_kapt)
 
     implementation(Dependencies.shimmer_koleton)
 
@@ -46,4 +52,5 @@ dependencies {
     implementation(project(":common_ui_res"))
 
     androidTestImplementation(project(":core:testing"))
+    kaptAndroidTest (Dependencies.hilt_android_compiler)
 }

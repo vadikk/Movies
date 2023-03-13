@@ -1,29 +1,35 @@
 package com.example.detail.presentation
 
-import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso.pressBack
-import com.example.detail.R
-import com.example.detail.testMovieDetailModule
-import com.example.testing.KoinTestRule
+import com.example.detail.utils.launchFragmentInHiltContainer
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 
-
-class MovieDetailFragmentTest{
+@HiltAndroidTest
+class MovieDetailFragmentTest {
 
     @get:Rule
-    val koinTestRule = KoinTestRule(listOf(testMovieDetailModule))
+    var hiltRule = HiltAndroidRule(this)
+
+    @Before
+    fun setup() {
+        hiltRule.inject()
+    }
 
     @Test
-    fun pressBackBtn_popBackStack(){
+    fun pressBackBtn_popBackStack() {
         val navController = mock(NavController::class.java)
-        val scenario = launchFragmentInContainer<MovieDetailFragment>(themeResId = R.style.ThemeTest)
-        scenario.onFragment{
-            Navigation.setViewNavController(it.requireView(), navController)
+        launchFragmentInHiltContainer<MovieDetailFragment>{
+            Navigation.setViewNavController(
+                (this@launchFragmentInHiltContainer as MovieDetailFragment).requireView(), navController
+            )
         }
 
         pressBack()

@@ -1,18 +1,20 @@
 package com.example.profile.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.profile.domain.model.Profile
 import com.example.profile.domain.repository.ProfileRepository
 import com.example.profile.domain.useCase.DataFieldType
 import com.example.profile.domain.useCase.ValidateField
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-internal class ProfileVM(
+@HiltViewModel
+internal class ProfileVM @Inject constructor(
     private val validateNoteField: ValidateField,
     private val profileRepository: ProfileRepository
 ): ViewModel() {

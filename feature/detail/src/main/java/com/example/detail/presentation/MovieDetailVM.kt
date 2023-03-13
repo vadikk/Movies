@@ -6,14 +6,17 @@ import androidx.lifecycle.viewModelScope
 import com.example.movie.model.MovieDetail
 import com.example.movie.repository.movie.MovieRepository
 import com.example.movie.repository.movieDetail.MovieDetailRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-internal class MovieDetailVM(
+@HiltViewModel
+internal class MovieDetailVM @Inject constructor(
     private val movieDetailRepository: MovieDetailRepository,
     private val savedStateHandle: SavedStateHandle
 ): ViewModel() {

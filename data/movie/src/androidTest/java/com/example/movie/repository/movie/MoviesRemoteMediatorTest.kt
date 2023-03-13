@@ -6,45 +6,49 @@ import com.example.database.dao.MovieRemoteKeysDao
 import com.example.database.dao.MoviesDao
 import com.example.database.model.MovieEntity
 import com.example.database.utils.TransactionProvider
-import com.example.movie.dataMovieTestModule
 import com.example.network.NetworkDataSource
 import com.example.network.fake.FakeNetworkSource
 import com.example.network.model.MovieApi
 import com.example.network.model.PopularMovieResponse
-import com.example.testing.KoinTestRule
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.koin.core.qualifier.named
-import org.koin.java.KoinJavaComponent
+import javax.inject.Inject
 
 @OptIn(
     ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class
 )
+@HiltAndroidTest
 class MoviesRemoteMediatorTest {
 
     @get:Rule
-    val koinTestRule = KoinTestRule(listOf(dataMovieTestModule))
+    var hiltRule = HiltAndroidRule(this)
 
-    private val networkDataSource by KoinJavaComponent.inject<NetworkDataSource>(
-        NetworkDataSource::class.java,
-        qualifier = named("Test")
-    )
-    private val movieDao by KoinJavaComponent.inject<MoviesDao>(MoviesDao::class.java)
-    private val movieRemoteKeysDao by KoinJavaComponent.inject<MovieRemoteKeysDao>(
-        MovieRemoteKeysDao::class.java
-    )
-    private val transactionProvider by KoinJavaComponent.inject<TransactionProvider>(
-        TransactionProvider::class.java
-    )
-    private val db by KoinJavaComponent.inject<MoviesDatabase>(
-        MoviesDatabase::class.java,
-        qualifier = named("Test")
-    )
+    @Inject
+    lateinit var db: MoviesDatabase
+
+    @Inject
+    lateinit var transactionProvider: TransactionProvider
+
+    @Inject
+    lateinit var movieDao: MoviesDao
+
+    @Inject
+    lateinit var movieRemoteKeysDao: MovieRemoteKeysDao
+    private lateinit var networkDataSource: NetworkDataSource
+
+    @Before
+    fun setup() {
+        hiltRule.inject()
+        networkDataSource = FakeNetworkSource()
+    }
 
     @After
     fun close() {

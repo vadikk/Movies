@@ -2,6 +2,8 @@ plugins {
     id ("com.android.library")
     kotlin ("android")
     id ("kotlin-kapt")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -22,6 +24,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 dependencies {
@@ -35,7 +40,9 @@ dependencies {
     implementation(Dependencies.android_room_ktx)
     implementation(Dependencies.android_room_paging)
 
-    implementation(Dependencies.koin_android)
+    implementation (Dependencies.hilt_android)
+    kapt (Dependencies.hilt_kapt)
 
     androidTestImplementation(project(":core:testing"))
+    kaptAndroidTest (Dependencies.hilt_android_compiler)
 }

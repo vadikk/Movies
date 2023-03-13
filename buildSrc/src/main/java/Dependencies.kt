@@ -37,8 +37,11 @@ object Dependencies {
     const val navigation_fragment_ktx = "androidx.navigation:navigation-fragment-ktx:${Versions.nav_version}"
     const val navigation_ui_ktx = "androidx.navigation:navigation-ui-ktx:${Versions.nav_version}"
 
-    //koin
-    const val koin_android = "io.insert-koin:koin-android:${Versions.koin_android}"
+    //hilt
+    const val hilt_android = "com.google.dagger:hilt-android:${Versions.hilt_android}"
+    const val hilt_kapt = "com.google.dagger:hilt-android-compiler:${Versions.hilt_android}"
+    const val hilt_android_testing = "com.google.dagger:hilt-android-testing:${Versions.hilt_android}"
+    const val hilt_android_compiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt_android}"
 
     //test
     const val junit = "junit:junit:${Versions.junit}"

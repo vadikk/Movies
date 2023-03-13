@@ -1,22 +1,26 @@
 package com.example.movies
 
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.navigation.*
-import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.NavController
+import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.NavOptions
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.common.nav.NavManager
 import com.example.common.nav.NavScreen
 import com.example.movies.databinding.ActivityMainBinding
-import org.koin.android.ext.android.inject
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val navManager: NavManager by inject()
+    @Inject
+    lateinit var navManager: NavManager
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,13 +40,14 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNav.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            binding.bottomNav.isVisible = destination.id != com.example.detail.R.id.movieDetailFragment
+            binding.bottomNav.isVisible =
+                destination.id != com.example.detail.R.id.movieDetailFragment
         }
     }
 
     private fun initNavManager() {
         navManager.setOnNavEvent {
-            when(it) {
+            when (it) {
                 is NavScreen.MovieDetail -> {
                     findNavController(R.id.navHostFragment).navigateToScreen(it.route)
                 }
@@ -61,7 +66,8 @@ class MainActivity : AppCompatActivity() {
                 )
             )
                 .build()
-        navigate(deeplink, NavOptions.Builder()
+        navigate(
+            deeplink, NavOptions.Builder()
                 .setEnterAnim(R.anim.fragment_slide_left_enter)
                 .setExitAnim(R.anim.fragment_slide_left_exit)
                 .setPopEnterAnim(R.anim.fragment_slide_right_enter)

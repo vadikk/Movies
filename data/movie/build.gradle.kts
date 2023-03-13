@@ -1,6 +1,8 @@
 plugins {
     id ("com.android.library")
     kotlin ("android")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -21,6 +23,14 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    kapt {
+        correctErrorTypes = true
+    }
+    configurations {
+        all {
+            exclude(group = "androidx.lifecycle", module = "lifecycle-viewmodel-ktx")
+        }
+    }
 }
 
 dependencies {
@@ -28,9 +38,11 @@ dependencies {
     implementation(project(":core:database"))
     implementation(project(":core:common"))
 
-    implementation (Dependencies.koin_android)
+    implementation (Dependencies.hilt_android)
+    kapt (Dependencies.hilt_kapt)
 
     implementation(Dependencies.paging)
 
     androidTestImplementation(project(":core:testing"))
+    kaptAndroidTest (Dependencies.hilt_android_compiler)
 }

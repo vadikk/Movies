@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -17,17 +18,18 @@ import com.example.common.nav.NavScreen
 import com.example.popular.presentation.adapter.PopularMoviesAdapter
 import com.example.popular.databinding.FragmentPopularListBinding
 import com.example.popular.presentation.adapter.LoadStatePagingAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 internal class PopularListFragment : Fragment() {
 
-    private val popularListVM: PopularListVM by viewModel()
-    private val navManager by inject<NavManager>()
+    @Inject
+    lateinit var navManager: NavManager
+    private val popularListVM: PopularListVM by viewModels()
     internal var adapter: PopularMoviesAdapter? = null
     private var binding: FragmentPopularListBinding? = null
 
