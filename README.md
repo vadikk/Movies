@@ -4,6 +4,12 @@ Android application following best practices: Kotlin, Coroutines, JetPack, Clean
 Project is focusing on modular, scalable, maintainable, and testable architecture, leading
 tech-stack and demonstrates the best development practices.
 
+## Branches
+This project has two branches of implementation:
+- xml_koin - xml ui + koin(dependency injection)
+- xml_hilt - xml ui + hilt(dependency injection)
+- with compose - soon:)
+
 ## Application Scope
 
 The `movies` displays information about popular films. The data is loaded from the
