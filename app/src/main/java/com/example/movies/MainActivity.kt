@@ -1,77 +1,58 @@
 package com.example.movies
 
-import android.net.Uri
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
-import androidx.navigation.NavController
-import androidx.navigation.NavDeepLinkRequest
-import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
-import com.example.common.nav.NavManager
-import com.example.common.nav.NavScreen
-import com.example.movies.databinding.ActivityMainBinding
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import com.example.common.theme.MovieTheme
+import com.example.movies.navigation.MovieAppState
+import com.example.movies.navigation.MovieBottomNavBar
+import com.example.movies.navigation.MovieNavHost
+import com.example.movies.navigation.rememberMovieAppState
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var navManager: NavManager
-    private lateinit var binding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        initNavManager()
-        initBottomNavigation()
-    }
-
-    private fun initBottomNavigation() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
-        val navController = navHostFragment.navController
-
-        binding.bottomNav.setupWithNavController(navController)
-
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            binding.bottomNav.isVisible =
-                destination.id != com.example.detail.R.id.movieDetailFragment
-        }
-    }
-
-    private fun initNavManager() {
-        navManager.setOnNavEvent {
-            when (it) {
-                is NavScreen.MovieDetail -> {
-                    findNavController(R.id.navHostFragment).navigateToScreen(it.route)
-                }
-                else -> Unit
+        setContent {
+            MovieTheme {
+                MovieApp()
             }
         }
     }
 
-    private fun NavController.navigateToScreen(route: String) {
-        val deeplink =
-            NavDeepLinkRequest.Builder.fromUri(
-                Uri.parse(
-                    getString(com.example.detail.R.string.detail_deeplink).replace(
-                        "{movieID}", route
-                    )
-                )
-            )
-                .build()
-        navigate(
-            deeplink, NavOptions.Builder()
-                .setEnterAnim(R.anim.fragment_slide_left_enter)
-                .setExitAnim(R.anim.fragment_slide_left_exit)
-                .setPopEnterAnim(R.anim.fragment_slide_right_enter)
-                .setPopExitAnim(R.anim.fragment_slide_right_exit).build()
+    @OptIn(ExperimentalAnimationApi::class)
+    @Composable
+    fun MovieApp(
+        movieAppState: MovieAppState = rememberMovieAppState(
+            navController = rememberAnimatedNavController()
         )
+    ) {
+        Scaffold(
+            bottomBar = {
+                if (movieAppState.shouldShowBottomBar) {
+                    MovieBottomNavBar(
+                        destinations = movieAppState.topLevelDestinations,
+                        onNavigateToDestination = { movieAppState.navigateToTopLevelDestination(it) },
+                        currentDestination = movieAppState.currentDestination,
+                        modifier = Modifier.testTag("SetupBottomNavBar")
+                    )
+                }
+            }
+        ) { paddingValues ->
+            MovieNavHost(
+                navController = movieAppState.navController,
+                onBackClick = movieAppState::onBackClick,
+                modifier = Modifier.padding(paddingValues)
+            )
+        }
     }
 }

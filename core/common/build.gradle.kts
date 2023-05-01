@@ -17,11 +17,19 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
+    }
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.4"
     }
     kapt {
         correctErrorTypes = true
@@ -29,6 +37,18 @@ android {
 }
 
 dependencies {
+    val composeBom = platform(Dependencies.androidxComposeBom)
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+
+    implementation (Dependencies.compose_ui)
+    implementation (Dependencies.compose_animation)
+    implementation (Dependencies.compose_material)
+    implementation (Dependencies.compose_ui_tooling_preview)
+    debugImplementation (Dependencies.compose_ui_tooling_debug)
+
+    implementation (Dependencies.coil_compose)
+
     implementation (Dependencies.hilt_android)
     kapt (Dependencies.hilt_kapt)
 }

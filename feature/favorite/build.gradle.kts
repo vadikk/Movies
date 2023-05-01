@@ -17,15 +17,18 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 
     buildFeatures {
-        viewBinding = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.4"
     }
     kapt {
         correctErrorTypes = true
@@ -33,21 +36,29 @@ android {
 }
 
 dependencies {
+    val composeBom = platform(Dependencies.androidxComposeBom)
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
 
     implementation (Dependencies.core_ktx)
-    implementation (Dependencies.appcompat)
     implementation (Dependencies.material)
+    implementation (Dependencies.compose_ui)
+    implementation (Dependencies.compose_material)
+    implementation (Dependencies.compose_ui_tooling_preview)
+    implementation (Dependencies.lifecycle_runtime_compose)
+    debugImplementation (Dependencies.compose_ui_tooling_debug)
+    
     testImplementation (Dependencies.junit)
     androidTestImplementation (Dependencies.android_junit)
     androidTestImplementation (Dependencies.espresso)
 
-    implementation (Dependencies.navigation_fragment_ktx)
-    implementation (Dependencies.navigation_ui_ktx)
-
-    implementation(Dependencies.coil)
+    implementation(Dependencies.coil_compose)
 
     implementation (Dependencies.hilt_android)
     kapt (Dependencies.hilt_kapt)
+    implementation (Dependencies.hilt_navigation_compose)
+
+    implementation (Dependencies.accompanist_nav_animation)
 
     implementation(project(":data:movie"))
     implementation(project(":core:common"))

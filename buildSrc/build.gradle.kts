@@ -10,12 +10,12 @@ repositories {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
-    compileOnly("com.android.tools.build:gradle:7.4.0")
+    compileOnly("com.android.tools.build:gradle:8.0.0")
     compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.21")
 }
 

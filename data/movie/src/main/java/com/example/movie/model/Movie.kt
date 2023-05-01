@@ -19,13 +19,14 @@ data class Movie(
 
 internal fun MovieApi.toDomainModel(): Movie =
     Movie(
-        id, originalTitle, overview, popularity, posterPath, releaseDate, title, voteAverage, voteCount
+        id, originalTitle.orEmpty(), overview.orEmpty(), popularity, posterPath.orEmpty(),
+        releaseDate.orEmpty(), title.orEmpty(), voteAverage, voteCount
     )
 
 internal fun MovieApi.toDatabaseModel(): MovieEntity =
     MovieEntity(
-        id, originalTitle, overview, popularity, posterPath, releaseDate, title, voteAverage, voteCount,
-        page
+        id, originalTitle.orEmpty(), overview.orEmpty(), popularity, posterPath.orEmpty(),
+        releaseDate.orEmpty(), title.orEmpty(), voteAverage, voteCount, page
     )
 
 internal fun MovieEntity.toDomainModel(): Movie =

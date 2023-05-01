@@ -14,11 +14,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 
@@ -33,6 +33,7 @@ dependencies {
     api (Dependencies.google_truth)
     api (Dependencies.junit)
     api (Dependencies.coroutines_test)
+    api (Dependencies.compose_ui_test_junit4)
 
     api (Dependencies.android_junit)
     api (Dependencies.espresso)

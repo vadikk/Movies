@@ -32,7 +32,8 @@ internal class PopularListVM @Inject constructor(
                     isSelected = favoriteMovie != null
                 )
             }
-        }.flowOn(dispatcherIO)
+        }
+        .flowOn(dispatcherIO)
 
     fun setFavoriteMovie(movie: Movie?, isSelected: Boolean) {
         if (movie == null) return

@@ -23,7 +23,7 @@ internal class MovieDetailVM @Inject constructor(
 
     private val moveID =
         if (savedStateHandle.contains("movieID")) savedStateHandle.get<String>("movieID")?.toInt() ?: 0
-        else 0
+        else -1
 
     private val _uiState = MutableStateFlow<MovieDetailState>(MovieDetailState.Loading)
     val uiState: StateFlow<MovieDetailState> = _uiState.asStateFlow()

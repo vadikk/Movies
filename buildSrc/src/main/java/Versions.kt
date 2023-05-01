@@ -3,6 +3,12 @@ object Versions {
     const val androidGradlePlugin = "7.4.0"
     const val kotlin = "1.7.21"
 
+    const val androidxComposeBom = "2023.04.01"
+    const val compose_activity = "1.7.0"
+    const val androidxLifecycle = "2.6.1"
+    const val accompanist_nav_animation = "0.30.1"
+    const val compose_constraintlayout = "1.0.1"
+
     const val core_ktx = "1.7.0"
     const val appcompat = "1.6.0"
     const val material = "1.8.0"
@@ -12,9 +18,12 @@ object Versions {
     const val retrofit = "2.9.0"
     const val okhttp = "4.10.0"
     const val paging_version = "3.1.1"
+    const val paging_compose = "1.0.0-alpha18"
     const val coil = "2.2.2"
+    const val coil_compose = "2.3.0"
     const val shimmer_koleton = "1.0.0-beta01"
     const val hilt_android = "2.44"
+    const val hilt_navigation_compose = "1.0.0"
 
     const val junit = "4.13.2"
     const val androidx_junit = "1.1.5"
